@@ -7,23 +7,73 @@
 
 import UIKit
 
-class CollectionViewController: UIViewController {
 
+class Mine{
+    var cleared: Bool
+    var mine: Bool
+    var count: Int
+    var icon: UIImage
+    
+    init(cleared: Bool, mine: Bool, count: Int, icon: UIImage) {
+        self.cleared = cleared
+        self.mine = mine
+        self.count = count
+        self.icon = icon
+    }
+    init(){
+        self.cleared = false
+        self.mine = false
+        self.count = 0
+        self.icon = UIImage(named: "Minesweeper_unopened_square")!
+    }
+}
+class CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    
+    @IBOutlet weak var mineSweeperCollection: UICollectionView!
+    var index = 0;
+    var mineField: [[[Mine]]] = []
+    var size = 5
+    var icons = [UIImage(named: "Minesweeper_unopened_square"),
+                 UIImage(named: "Minesweeper_1.svg"),
+                 UIImage(named: "Minesweeper_2.svg"),
+                 UIImage(named: "Minesweeper_3.svg"),
+                 UIImage(named: "Minesweeper_4.svg"),
+                 UIImage(named: "Minesweeper_5.svg"),
+                 UIImage(named: "Minesweeper_6.svg"),
+                 UIImage(named: "Minesweeper_7.svg"),
+                 UIImage(named: "Minesweeper_8.svg"),]
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        mineSweeperCollection.dataSource = self
+        mineSweeperCollection.delegate = self
+        let layout = UICollectionViewFlowLayout()
+                    layout.minimumLineSpacing = 0
+                    layout.minimumInteritemSpacing = 0
+                    layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.itemSize = CGSize(width: 393.0/Double(size), height: 393.0/Double(size))
+        mineSweeperCollection.collectionViewLayout = layout
+        var temp = [[Mine(),Mine(),Mine(),Mine(),Mine()],
+                    [Mine(),Mine(),Mine(),Mine(),Mine()],
+                    [Mine(),Mine(),Mine(),Mine(),Mine()],
+                    [Mine(),Mine(),Mine(),Mine(),Mine()],
+                    [Mine(),Mine(),Mine(),Mine(),Mine()]]
+        mineField.append(temp)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return Int(size*size)
     }
-    */
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MineCell
+        cell.backgroundColor = UIColor.red
+        cell.mineIcon.image = UIImage(named: "Minesweeper_unopened_square")
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        index = indexPath.row
+        collectionView.reloadData()
+    }
 
 }

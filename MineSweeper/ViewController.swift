@@ -6,14 +6,19 @@
 //
 
 import UIKit
-
+class delegate {
+    static var minefied: [[Mine]] = []
+}
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
     }
-
-
+    
+    @IBAction func easyAction(_ sender: Any) {
+        
+    }
+    
 }
 

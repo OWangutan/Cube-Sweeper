@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DAA59EED2B9A185500711F93 /* MineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA59EEC2B9A185500711F93 /* MineCell.swift */; };
 		DAD995772B97740D00871412 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD995762B97740D00871412 /* AppDelegate.swift */; };
 		DAD995792B97740D00871412 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD995782B97740D00871412 /* SceneDelegate.swift */; };
 		DAD9957B2B97740D00871412 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9957A2B97740D00871412 /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 		DAD9958E2B97740E00871412 /* MineSweeperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9958D2B97740E00871412 /* MineSweeperTests.swift */; };
 		DAD995982B97740E00871412 /* MineSweeperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD995972B97740E00871412 /* MineSweeperUITests.swift */; };
 		DAD9959A2B97740E00871412 /* MineSweeperUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD995992B97740E00871412 /* MineSweeperUITestsLaunchTests.swift */; };
+		DADC92432B98C04100DC2A46 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADC92422B98C04100DC2A46 /* CollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DAA59EEC2B9A185500711F93 /* MineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineCell.swift; sourceTree = "<group>"; };
 		DAD995732B97740D00871412 /* MineSweeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MineSweeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAD995762B97740D00871412 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAD995782B97740D00871412 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +52,7 @@
 		DAD995932B97740E00871412 /* MineSweeperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MineSweeperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAD995972B97740E00871412 /* MineSweeperUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineSweeperUITests.swift; sourceTree = "<group>"; };
 		DAD995992B97740E00871412 /* MineSweeperUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineSweeperUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		DADC92422B98C04100DC2A46 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +107,8 @@
 				DAD995782B97740D00871412 /* SceneDelegate.swift */,
 				DAD9957A2B97740D00871412 /* ViewController.swift */,
 				DAD9957C2B97740D00871412 /* Main.storyboard */,
+				DADC92422B98C04100DC2A46 /* CollectionViewController.swift */,
+				DAA59EEC2B9A185500711F93 /* MineCell.swift */,
 				DAD9957F2B97740D00871412 /* Assets.xcassets */,
 				DAD995812B97740D00871412 /* LaunchScreen.storyboard */,
 				DAD995842B97740D00871412 /* Info.plist */,
@@ -258,8 +264,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DADC92432B98C04100DC2A46 /* CollectionViewController.swift in Sources */,
 				DAD9957B2B97740D00871412 /* ViewController.swift in Sources */,
 				DAD995772B97740D00871412 /* AppDelegate.swift in Sources */,
+				DAA59EED2B9A185500711F93 /* MineCell.swift in Sources */,
 				DAD995792B97740D00871412 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
