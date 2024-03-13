@@ -17,15 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PFc-eW-kni">
-                                <rect key="frame" x="159" y="217" width="75" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                <connections>
-                                    <segue destination="x9L-wJ-vJL" kind="show" id="3rJ-q8-CvN"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dij-yk-Yok">
                                 <rect key="frame" x="167" y="331" width="60" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -33,6 +24,7 @@
                                 <buttonConfiguration key="configuration" style="filled" title="Easy"/>
                                 <connections>
                                     <action selector="easyAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="45I-ki-Qk6"/>
+                                    <segue destination="x9L-wJ-vJL" kind="show" id="WWY-87-jV8"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kry-KN-dIe">
@@ -40,12 +32,20 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Middle"/>
+                                <connections>
+                                    <action selector="MediumAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JUZ-BT-31t"/>
+                                    <segue destination="x9L-wJ-vJL" kind="show" id="d7c-dS-gan"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="REQ-gp-XBZ">
                                 <rect key="frame" x="167" y="460" width="61" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Hard"/>
+                                <connections>
+                                    <action selector="hardAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="i0m-Km-2lC"/>
+                                    <segue destination="x9L-wJ-vJL" kind="show" id="E0G-dX-l9E"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yig-jw-hTg">
                                 <rect key="frame" x="156" y="523" width="81" height="35"/>
@@ -166,6 +166,9 @@
             <point key="canvasLocation" x="-187.02290076335876" y="-32.394366197183103"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="d7c-dS-gan"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="Minesweeper_unopened_square" width="76" height="76"/>
         <systemColor name="systemBackgroundColor">

@@ -33,7 +33,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet weak var mineSweeperCollection: UICollectionView!
     var index = 0;
     var mineField: [[[Mine]]] = []
-    var size = 5
+    var size = 0
     var icons = [UIImage(named: "Minesweeper_unopened_square"),
                  UIImage(named: "Minesweeper_1.svg"),
                  UIImage(named: "Minesweeper_2.svg"),
@@ -45,7 +45,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
                  UIImage(named: "Minesweeper_8.svg"),]
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        size = delegate.size
         mineSweeperCollection.dataSource = self
         mineSweeperCollection.delegate = self
         let layout = UICollectionViewFlowLayout()
@@ -54,17 +54,25 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
                     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.itemSize = CGSize(width: 393.0/Double(size), height: 393.0/Double(size))
         mineSweeperCollection.collectionViewLayout = layout
-        var temp = [[Mine(),Mine(),Mine(),Mine(),Mine()],
-                    [Mine(),Mine(),Mine(),Mine(),Mine()],
-                    [Mine(),Mine(),Mine(),Mine(),Mine()],
-                    [Mine(),Mine(),Mine(),Mine(),Mine()],
-                    [Mine(),Mine(),Mine(),Mine(),Mine()]]
-        mineField.append(temp)
+       
     }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Int(size*size)
+        return Int(size*size*size) + Int(size)
     }
+    //working on
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
 
+            if indexPath.item == 0 {
+                width = 100
+                height = 100
+            } else {
+                width = 50
+                height = 50
+            }
+            return CGSizeMake(width, height)
+
+    }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MineCell
         cell.backgroundColor = UIColor.red

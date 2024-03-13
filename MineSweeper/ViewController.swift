@@ -7,7 +7,7 @@
 
 import UIKit
 class delegate {
-    static var minefied: [[Mine]] = []
+    static var size = 0
 }
 class ViewController: UIViewController {
 
@@ -17,7 +17,13 @@ class ViewController: UIViewController {
     }
     
     @IBAction func easyAction(_ sender: Any) {
-        
+        delegate.size = 5
+    }
+    @IBAction func MediumAction(_ sender: Any) {
+        delegate.size = 7
+    }
+    @IBAction func hardAction(_ sender: Any) {
+        delegate.size = 9
     }
     
 }
