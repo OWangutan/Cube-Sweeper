@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+//fdsfsdfd
 
 class Mine{
     var cleared: Bool
