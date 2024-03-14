@@ -34,6 +34,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     var index = 0;
     var mineField: [[[Mine]]] = []
     var size = 0
+    var initialClear = true
     var icons = [UIImage(named: "Minesweeper_unopened_square"),
                  UIImage(named: "Minesweeper_1.svg"),
                  UIImage(named: "Minesweeper_2.svg"),
@@ -61,18 +62,19 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         return Int(size*size*size) + Int(size)
     }
     //working on
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-
-            if indexPath.item == 0 {
-                width = 100
-                height = 100
-            } else {
-                width = 50
-                height = 50
-            }
-            return CGSizeMake(width, height)
-
-    }
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+////
+////            if indexPath.item == 0 {
+////                width = 100
+////                height = 100
+////            } else {
+////                width = 50
+////                height = 50
+////            }
+////            return CGSizeMake(width, height)
+//
+//    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MineCell
         cell.backgroundColor = UIColor.red
@@ -81,7 +83,39 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         index = indexPath.row
+        if initialClear {
+            createMines(gridSize: 5)
+        }
         collectionView.reloadData()
     }
+    func createMines (gridSize: Int) {
+            
+            for z in 0..<gridSize {
+                
+                var grid: [[Mine]] = [[]]
+                for row in 0..<gridSize {
+                    var newRow: [Mine] = []
+                    
+                    for column in 0..<gridSize {
+                        let randomInt = Int.random(in: 0...4)
+                        if randomInt == 0 {
+                            newRow.append(Mine(cleared: false, mine: true, count: 0, icon: icons[0]!))
+                            newRow[column].count = -1
+                        } else {
+                            newRow.append(Mine(cleared: false, mine: false, count: 0, icon: icons[0]!))
+                        }
+                    }
+                    if row == 0 {
+                        grid[0] = newRow
+                    } else {
+                        grid.append(newRow)
+                    }
+                }
+                mineField.append(grid)
+            }
+            
+            initialClear = false
+            print(mineField)
+        }
 
 }
