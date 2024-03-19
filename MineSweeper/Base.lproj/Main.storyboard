@@ -104,7 +104,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="YQc-ls-0EG" customClass="MineCell" customModule="MineSweeper" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="123" height="121"/>
+                                        <rect key="frame" x="135" y="0.0" width="123" height="121"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tIS-9g-UFv">
                                             <rect key="frame" x="0.0" y="0.0" width="123" height="121"/>
@@ -125,6 +125,15 @@
                                         <connections>
                                             <outlet property="mineIcon" destination="Vaw-Bc-0cM" id="n7q-OV-FEt"/>
                                         </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="spaceCell" id="Bz1-a5-agJ">
+                                        <rect key="frame" x="0.0" y="121" width="393" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="dma-TY-x6P">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="45"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="393" height="45"/>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
