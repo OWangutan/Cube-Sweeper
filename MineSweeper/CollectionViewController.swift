@@ -26,6 +26,9 @@ class Mine{
         self.count = 0
         self.icon = UIImage(named: "Minesweeper_unopened_square")!
     }
+    func changeCount(count: Int) {
+        self.count = count
+    }
 }
 class CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
@@ -65,10 +68,17 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if initialClear {
+            createMines(gridSize: size)
+            countMines(gridSize: size)
+        } else {
+            
+        }
         if (indexPath.row)%(size*size + size) < size*size {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MineCell
             cell.backgroundColor = UIColor.red
-            cell.mineIcon.image = UIImage(named: "Minesweeper_unopened_square")
+            var spot = ArraySpot(gridSize: size, number: indexPath.row)
+            cell.mineIcon.image = mineField[spot[0]][spot[1]][spot[2]].icon
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "spaceCell", for: indexPath)
@@ -77,10 +87,12 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //if (indexPath.row)%(size*size + size) >= size*size {
-            print(ArraySpot(gridSize: size, number: indexPath.row))
+        if (indexPath.row)%(size*size + size) < size*size {
+            //print(ArraySpot(gridSize: size, number: indexPath.row))
+            var spot = ArraySpot(gridSize: size, number: indexPath.row)
+            mineField[spot[0]][spot[1]][spot[2]].icon = icons[mineField[spot[0]][spot[1]][spot[2]].count]!
             collectionView.reloadData()
-       // }
+        }
     }
     func createMines (gridSize: Int) {
             
@@ -111,11 +123,119 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
             initialClear = false
             print(mineField)
         }
+    
+    func countMines(gridSize: Int) {
+             for ex in 0..<mineField.count {
+                 for y in 0..<mineField[0].count {
+                     for z in 0..<mineField[0][0].count {
+                         var mineCounter = 0
+                         //check above
+                         if !mineField[ex][y][z].mine {
+                             if ex != gridSize-1 {
+                                 if (mineField[ex+1][y][z].mine) {
+                                     mineCounter = mineCounter + 1
+                                 }
+                                 if (y-1 > 0) {
+                                     if (mineField[ex+1][y-1][z].mine) {
+                                         mineCounter = mineCounter + 1
+                                     }
+                                 }
+                                 if (z-1 > 0) {
+                                     if (mineField[ex+1][y][z-1].mine) {
+                                         mineCounter = mineCounter + 1
+                                     }
+                                 }
+                                 if (y+1 < 5) {
+                                     if (mineField[ex+1][y+1][z].mine) {
+                                         mineCounter = mineCounter + 1
+                                     }
+                                 }
+                                 if (z+1 < 5) {
+                                     if (mineField[ex+1][y][z+1].mine) {
+                                         mineCounter = mineCounter + 1
+                                     }
+                                 }
+                             }
+                             //same layer
+                             if (y-1 > 0) && (z-1 > 0) {
+                                 if (mineField[ex][y-1][z-1].mine) {
+                                     mineCounter = mineCounter + 1
+                                 }
+                             }
+                             if (y-1 > 0) {
+                                 if (mineField[ex][y-1][z].mine) {
+                                     mineCounter = mineCounter + 1
+                                 }
+                             }
+                             if (y-1 > 0) && (z+1 < 5) {
+                                 if (mineField[ex][y-1][z+1].mine) {
+                                     mineCounter = mineCounter + 1
+                                 }
+                             }
+                             if (z-1 > 0) {
+                                 if (mineField[ex][y][z-1].mine) {
+                                     mineCounter = mineCounter + 1
+                                 }
+                             }
+                             if (z+1 < 5) {
+                                 if (mineField[ex][y][z+1].mine) {
+                                     mineCounter = mineCounter + 1
+                                 }
+                             }
+                             if (y+1 < 5) && (z-1 > 0) {
+                                 if (mineField[ex][y+1][z-1].mine) {
+                                     mineCounter = mineCounter + 1
+                                 }
+                             }
+                             if (y+1 < 5) {
+                                 if (mineField[ex][y+1][z].mine) {
+                                     mineCounter = mineCounter + 1
+                                 }
+                             }
+                             if (y+5 < 5) && (z+1 < 5) {
+                                 if (mineField[ex][y+1][z+1].mine) {
+                                     mineCounter = mineCounter + 1
+                                 }
+                             }
+                             //check below
+                             if ex != 0 {
+                                 if (mineField[ex-1][y][z].mine) {
+                                     mineCounter = mineCounter + 1
+                                 }
+                                 if (y-1 > 0) {
+                                     if (mineField[ex-1][y-1][z].mine) {
+                                         mineCounter = mineCounter + 1
+                                     }
+                                 }
+                                 if (z-1 > 0) {
+                                     if (mineField[ex-1][y][z-1].mine) {
+                                         mineCounter = mineCounter + 1
+                                     }
+                                 }
+                                 if (y+1 < 5) {
+                                     if (mineField[ex-1][y+1][z].mine) {
+                                         mineCounter = mineCounter + 1
+                                     }
+                                 }
+                                 if (z+1 < 5) {
+                                     if (mineField[ex-1][y][z+1].mine) {
+                                         mineCounter = mineCounter + 1
+                                     }
+                                 }
+                             }
+                         }
+                         mineField[ex][y][z].changeCount(count: mineCounter)
+                     }
+                 }
+             }
+         }
+
     func ArraySpot(gridSize: Int, number: Int) -> [Int] {
             var xpos = number/(gridSize*gridSize + gridSize)
             let num = (xpos) * (gridSize)
             var ypos = (number - num)%(gridSize*gridSize)/(gridSize)
             var zpos = (number - num)%(gridSize)
+
             return [xpos,ypos,zpos]
        }
 }
