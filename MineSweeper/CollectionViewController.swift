@@ -33,6 +33,9 @@ class Mine{
 class CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     
+    @IBOutlet weak var timerOutlet: UILabel!
+    @IBOutlet weak var mineCountLabelOutlet: UILabel!
+    @IBOutlet weak var flagButton: UIBarButtonItem!
     @IBOutlet weak var mineSweeperCollection: UICollectionView!
     var index = 0;
     var fieldindex = 0;
@@ -40,7 +43,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     var size = 0
     var initialClear = true
     
-    var icons = [UIImage(named: "Minesweeper_unopened_square"),
+    var icons = [UIImage(named: "1920px-Minesweeper_opened_square.svg"),
                  UIImage(named: "Minesweeper_1.svg"),
                  UIImage(named: "Minesweeper_2.svg"),
                  UIImage(named: "Minesweeper_3.svg"),
@@ -77,7 +80,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         if (indexPath.row)%(size*size + size) < size*size {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MineCell
             cell.backgroundColor = UIColor.red
-            var spot = ArraySpot(gridSize: size, number: indexPath.row)
+            let spot = ArraySpot(gridSize: size, number: indexPath.row)
             cell.mineIcon.image = mineField[spot[0]][spot[1]][spot[2]].icon
             return cell
         } else {
@@ -89,8 +92,12 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if (indexPath.row)%(size*size + size) < size*size {
             //print(ArraySpot(gridSize: size, number: indexPath.row))
-            var spot = ArraySpot(gridSize: size, number: indexPath.row)
-            mineField[spot[0]][spot[1]][spot[2]].icon = icons[mineField[spot[0]][spot[1]][spot[2]].count]!
+            let spot = ArraySpot(gridSize: size, number: indexPath.row)
+            if mineField[spot[0]][spot[1]][spot[2]].mine{
+                mineField[spot[0]][spot[1]][spot[2]].icon = UIImage(named: "Gnome-gnomine (1)")!
+            } else {
+                mineField[spot[0]][spot[1]][spot[2]].icon = icons[mineField[spot[0]][spot[1]][spot[2]].count]!
+            }
             collectionView.reloadData()
         }
     }
@@ -105,10 +112,10 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
                     for column in 0..<gridSize {
                         let randomInt = Int.random(in: 0...4)
                         if randomInt == 0 {
-                            newRow.append(Mine(cleared: false, mine: true, count: 0, icon: icons[0]!))
+                            newRow.append(Mine(cleared: false, mine: true, count: 0, icon: UIImage(named: "Minesweeper_unopened_square")!))
                             newRow[column].count = -1
                         } else {
-                            newRow.append(Mine(cleared: false, mine: false, count: 0, icon: icons[0]!))
+                            newRow.append(Mine(cleared: false, mine: false, count: 0, icon: UIImage(named: "Minesweeper_unopened_square")!))
                         }
                     }
                     if row == 0 {
@@ -135,12 +142,12 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
                                  if (mineField[ex+1][y][z].mine) {
                                      mineCounter = mineCounter + 1
                                  }
-                                 if (y-1 > 0) {
+                                 if (y-1 >= 0) {
                                      if (mineField[ex+1][y-1][z].mine) {
                                          mineCounter = mineCounter + 1
                                      }
                                  }
-                                 if (z-1 > 0) {
+                                 if (z-1 >= 0) {
                                      if (mineField[ex+1][y][z-1].mine) {
                                          mineCounter = mineCounter + 1
                                      }
@@ -157,22 +164,22 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
                                  }
                              }
                              //same layer
-                             if (y-1 > 0) && (z-1 > 0) {
+                             if (y-1 >= 0) && (z-1 >= 0) {
                                  if (mineField[ex][y-1][z-1].mine) {
                                      mineCounter = mineCounter + 1
                                  }
                              }
-                             if (y-1 > 0) {
+                             if (y-1 >= 0) {
                                  if (mineField[ex][y-1][z].mine) {
                                      mineCounter = mineCounter + 1
                                  }
                              }
-                             if (y-1 > 0) && (z+1 < 5) {
+                             if (y-1 >= 0) && (z+1 < 5) {
                                  if (mineField[ex][y-1][z+1].mine) {
                                      mineCounter = mineCounter + 1
                                  }
                              }
-                             if (z-1 > 0) {
+                             if (z-1 >= 0) {
                                  if (mineField[ex][y][z-1].mine) {
                                      mineCounter = mineCounter + 1
                                  }
@@ -182,7 +189,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
                                      mineCounter = mineCounter + 1
                                  }
                              }
-                             if (y+1 < 5) && (z-1 > 0) {
+                             if (y+1 < 5) && (z-1 >= 0) {
                                  if (mineField[ex][y+1][z-1].mine) {
                                      mineCounter = mineCounter + 1
                                  }
@@ -202,12 +209,12 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
                                  if (mineField[ex-1][y][z].mine) {
                                      mineCounter = mineCounter + 1
                                  }
-                                 if (y-1 > 0) {
+                                 if (y-1 >= 0) {
                                      if (mineField[ex-1][y-1][z].mine) {
                                          mineCounter = mineCounter + 1
                                      }
                                  }
-                                 if (z-1 > 0) {
+                                 if (z-1 >= 0) {
                                      if (mineField[ex-1][y][z-1].mine) {
                                          mineCounter = mineCounter + 1
                                      }
@@ -229,6 +236,9 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
                  }
              }
          }
+
+
+
 
     func ArraySpot(gridSize: Int, number: Int) -> [Int] {
             var xpos = number/(gridSize*gridSize + gridSize)
