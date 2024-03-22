@@ -13,18 +13,21 @@ class Mine{
     var mine: Bool
     var count: Int
     var icon: UIImage
+    var flag: Bool
     
-    init(cleared: Bool, mine: Bool, count: Int, icon: UIImage) {
+    init(cleared: Bool, mine: Bool, count: Int, icon: UIImage, flag: Bool) {
         self.cleared = cleared
         self.mine = mine
         self.count = count
         self.icon = icon
+        self.flag = flag
     }
     init(){
         self.cleared = false
         self.mine = false
         self.count = 0
         self.icon = UIImage(named: "Minesweeper_unopened_square")!
+        self.flag = false
     }
     func changeCount(count: Int) {
         self.count = count
@@ -35,14 +38,13 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     
     @IBOutlet weak var timerOutlet: UILabel!
     @IBOutlet weak var mineCountLabelOutlet: UILabel!
-    @IBOutlet weak var flagButton: UIBarButtonItem!
     @IBOutlet weak var mineSweeperCollection: UICollectionView!
     var index = 0;
     var fieldindex = 0;
     var mineField: [[[Mine]]] = []
     var size = 0
     var initialClear = true
-    
+    var flagging = false
     var icons = [UIImage(named: "1920px-Minesweeper_opened_square.svg"),
                  UIImage(named: "Minesweeper_1.svg"),
                  UIImage(named: "Minesweeper_2.svg"),
@@ -67,7 +69,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Int(size*size*size) + Int(size - 1)*5
+        return Int(size*size*size) + Int(size - 1)*size
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -90,16 +92,31 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
         
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if (indexPath.row)%(size*size + size) < size*size {
-            //print(ArraySpot(gridSize: size, number: indexPath.row))
-            let spot = ArraySpot(gridSize: size, number: indexPath.row)
-            if mineField[spot[0]][spot[1]][spot[2]].mine{
-                mineField[spot[0]][spot[1]][spot[2]].icon = UIImage(named: "Gnome-gnomine (1)")!
-            } else {
-                mineField[spot[0]][spot[1]][spot[2]].icon = icons[mineField[spot[0]][spot[1]][spot[2]].count]!
+        let spot = ArraySpot(gridSize: size, number: indexPath.row)
+        if flagging {
+            if !mineField[spot[0]][spot[1]][spot[2]].cleared {
+                if mineField[spot[0]][spot[1]][spot[2]].flag{
+                    mineField[spot[0]][spot[1]][spot[2]].icon = UIImage(named: "Minesweeper_unopened_square")!
+                    mineField[spot[0]][spot[1]][spot[2]].flag = false
+                } else {
+                    mineField[spot[0]][spot[1]][spot[2]].icon = UIImage(named: "Minesweeper_flag.svg")!
+                    mineField[spot[0]][spot[1]][spot[2]].flag = true
+                }
             }
-            collectionView.reloadData()
+        } else {
+            if !mineField[spot[0]][spot[1]][spot[2]].flag{
+                if (indexPath.row)%(size*size + size) < size*size {
+                    if mineField[spot[0]][spot[1]][spot[2]].mine{
+                        mineField[spot[0]][spot[1]][spot[2]].icon = UIImage(named: "Gnome-gnomine (1)")!
+                    } else {
+                        mineField[spot[0]][spot[1]][spot[2]].icon = icons[mineField[spot[0]][spot[1]][spot[2]].count]!
+                    }
+                }
+                mineField[spot[0]][spot[1]][spot[2]].cleared = true
+            }
+            
         }
+        collectionView.reloadData()
     }
     func createMines (gridSize: Int) {
             
@@ -112,10 +129,10 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
                     for column in 0..<gridSize {
                         let randomInt = Int.random(in: 0...4)
                         if randomInt == 0 {
-                            newRow.append(Mine(cleared: false, mine: true, count: 0, icon: UIImage(named: "Minesweeper_unopened_square")!))
+                            newRow.append(Mine(cleared: false, mine: true, count: 0, icon: UIImage(named: "Minesweeper_unopened_square")!, flag: false))
                             newRow[column].count = -1
                         } else {
-                            newRow.append(Mine(cleared: false, mine: false, count: 0, icon: UIImage(named: "Minesweeper_unopened_square")!))
+                            newRow.append(Mine(cleared: false, mine: false, count: 0, icon: UIImage(named: "Minesweeper_unopened_square")!,flag: false))
                         }
                     }
                     if row == 0 {
@@ -248,4 +265,12 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
 
             return [xpos,ypos,zpos]
        }
+    
+    @IBAction func FlagAction(_ sender: Any) {
+        if flagging {
+            flagging = false
+        } else {
+            flagging = true
+        }
+    }
 }
